@@ -8,6 +8,7 @@
 
 #define EI_NOTEXTERNAL
 #include <EnableInterrupt.h>
+#include <SPI.h>
 #include <AskSinPP.h>
 #include <LowPower.h>
 #include <Register.h>
@@ -46,7 +47,11 @@ const struct DeviceInfo PROGMEM devinfo = {
 /**
    Configure the used hardware
 */
-typedef AskSin<StatusLed<ONBOARD_LED_PIN>, NoBattery, Radio<AvrSPI<10, 11, 12, 13>, 2>> HalType;
+#if defined __AVR_ATmega2560__
+typedef AskSin<StatusLed<ONBOARD_LED_PIN>, NoBattery, Radio<LibSPI<53>, 2>> HalType;
+#else
+typedef AskSin<StatusLed<ONBOARD_LED_PIN>, NoBattery, Radio<LibSPI<10>, 2>> HalType;
+#endif
 
 DEFREGISTER(Reg0, MASTERID_REGS, 0x20, 0x21)
 class Ws28xxList0 : public RegList0<Reg0> {
