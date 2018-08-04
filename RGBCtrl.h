@@ -30,6 +30,8 @@
 
 CRGB leds[WSNUM_LEDS];
 
+#include "RGBPrograms.h"
+
 namespace as {
 
 DEFREGISTER(DimmerReg1, CREG_AES_ACTIVE, CREG_TRANSMITTRYMAX, CREG_OVERTEMPLEVEL,
@@ -654,63 +656,26 @@ class RGBLEDChannel : public Channel<HalType, DimmerList1, DimmerList3, EmptyLis
           setColor(currentColor);
           break;
         case 1:
-          runRainbowProgram(SLOW_PROGRAM_TIMER);
+          RGBProgramRainbow(SLOW_PROGRAM_TIMER, brightness);
           break;
         case 2:
-          runRainbowProgram(NORMAL_PROGRAM_TIMER);
+          RGBProgramRainbow(NORMAL_PROGRAM_TIMER, brightness);
           break;
         case 3:
-          runRainbowProgram(FAST_PROGRAM_TIMER);
+          RGBProgramRainbow(FAST_PROGRAM_TIMER, brightness);
           break;
         case 4:
-          runFireProgram();
+          RGBProgramFire(brightness);
+          break;
+        case 5:
+          RGBProgramWaterfall(brightness);
+          break;
+        case 6:
+          RGBProgramTVSimulation(brightness);
           break;
       }
     }
 
-    void runRainbowProgram(uint8_t speed) {
-      static uint8_t startIndex = 0;
-      static unsigned long lastmillis = millis();
-      if (millis() - lastmillis > speed) {
-        startIndex = startIndex + 1; /* motion speed */
-        for ( int i = 0; i < WSNUM_LEDS; i++) {
-          leds[i] = ColorFromPalette( RainbowColors_p, startIndex, brightness, LINEARBLEND);
-        }
-        lastmillis = millis();
-      }
-    }
-
-    void runFireProgram() {
-      static unsigned long lastmillis = millis();
-      if (millis() - lastmillis > 15) {
-
-        // Array of temperature readings at each simulation cell
-        static byte heat[WSNUM_LEDS];
-
-        for ( int i = 0; i < WSNUM_LEDS; i++) {
-          heat[i] = qsub8( heat[i],  random8(0, ((FIRE_PROGRAM_COOLING * 10) / WSNUM_LEDS) + 2));
-        }
-
-        for ( int k = WSNUM_LEDS - 1; k >= 2; k--) {
-          heat[k] = (heat[k - 1] + heat[k - 2] + heat[k - 2] ) / 3;
-        }
-
-        if ( random8() < FIRE_PROGRAM_SPARKLING ) {
-          int y = random8(7);
-          heat[y] = qadd8( heat[y], random8(160, 255) );
-        }
-
-        for ( int j = 0; j < WSNUM_LEDS; j++) {
-          CRGB color = HeatColor( heat[j]);
-          int pixelnumber;
-
-          pixelnumber = j;
-
-          leds[pixelnumber] = color;
-        }
-        lastmillis = millis();
-      }
-    }
     bool process (const SensorEventMsg & msg) {
       bool lg = msg.isLong();
       Peer p(msg.peer());
