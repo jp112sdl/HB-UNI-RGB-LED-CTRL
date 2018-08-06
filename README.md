@@ -16,3 +16,5 @@ HomeMatic kompatibler RGB Controller für adressierbare RGB LEDs (WS28xx, Neopix
 
 sowie auf der Zentrale (CCU2 / CCU3 / RaspberryMatic) das [JP-HB-Devices](https://github.com/jp112sdl/JP-HB-Devices-addon) Addon.
  
+**Demo:**
+![demo](Images/sample.png)
