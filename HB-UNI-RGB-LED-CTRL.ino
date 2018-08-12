@@ -14,10 +14,10 @@
 #include <Register.h>
 
 
-#define WSNUM_LEDS    5
-#define WSLED_PIN     9
-#define WSLED_TYPE    WS2812B
-#define WSCOLOR_ORDER GRB
+#define WSNUM_LEDS    5          //Anzahl angeschlossener LEDs
+#define WSLED_PIN     9          //GPIO Pin LED Anschluss 
+#define WSLED_TYPE    WS2812B    //LED Typ
+#define WSCOLOR_ORDER GRB        //Farbreihenfolge 
 
 #define SLOW_PROGRAM_TIMER     30     //ms Wartezeit für den Übergang
 #define NORMAL_PROGRAM_TIMER   15     //ms Wartezeit für den Übergang
