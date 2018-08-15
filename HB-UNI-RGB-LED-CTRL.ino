@@ -22,11 +22,15 @@
 #define SLOW_PROGRAM_TIMER     30     //ms Wartezeit für den Übergang
 #define NORMAL_PROGRAM_TIMER   15     //ms Wartezeit für den Übergang
 #define FAST_PROGRAM_TIMER     0      //ms Wartezeit für den Übergang
-#define FIRE_PROGRAM_COOLING   55     
+#define FIRE_PROGRAM_COOLING   55
 #define FIRE_PROGRAM_SPARKLING 120
 
+#if defined __AVR_ATmega2560__
+#define CONFIG_BUTTON_PIN 13
+#else
 #define CONFIG_BUTTON_PIN 8
-#define ONBOARD_LED_PIN 4
+#endif
+#define ONBOARD_LED_PIN   4
 
 #include "RGBCtrl.h"
 
@@ -81,7 +85,7 @@ void loop() {
   bool worked = hal.runready();
   bool poll = sdev.pollRadio();
   if ( worked == false && poll == false ) {
-    hal.activity.savePower<Idle<true> >(hal);
+    hal.activity.savePower<Idle<true>>(hal);
   }
   sdev.handleLED();
 }
