@@ -646,7 +646,7 @@ class RGBLEDChannel : public Channel<HalType, DimmerList1, DimmerList3, EmptyLis
 
     void setColor(uint8_t val) {
       for (int i = 0; i < WSNUM_LEDS; i++) {
-        leds[i] = CHSV((val * 1275L) / 1000, 255, 255);
+        leds[i] = CHSV((val * 1275L) / 1000, (val <  200) ? 255 : 0, 255);
       }
     }
 
