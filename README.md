@@ -9,7 +9,10 @@ HomeMatic kompatibler RGB Controller für adressierbare RGB LEDs (WS28xx, Neopix
 ![wiring_2560](Images/wiring_2560.png)
 
 Um Platz zu sparen, kann man die [Mega2560 Core](https://de.aliexpress.com/item/Mega-2560-PRO-Embed-CH340G-ATmega2560-16AU-NO-pinheaders-Compatible-for-Arduino-Mega-2560/32802420999.html) Variante einsetzen.<br>
-<img src=https://ae01.alicdn.com/kf/HTB1shpGQpXXXXXsXVXXq6xXFXXX0/Mega-2560-PRO-Embed-CH340G-ATmega2560-16AU-KEINE-pinheaders-kompatibel-f-r-Arduino-Mega-2560.jpg width=300 />
+<img src=Images/mega2560_core_front.jpg /><img src=Images/mega2560_core_back.jpg /><br>
+
+
+
 
 **Benötigte Libs:**
  - [FastLED](https://github.com/FastLED/FastLED)
