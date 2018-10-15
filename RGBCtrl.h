@@ -577,7 +577,7 @@ class RGBLEDChannel : public Channel<HalType, DimmerList1, DimmerList3, EmptyLis
     }
 
     void patchStatus (Message& msg) {
-      switch (number()) {
+      switch (this->number()) {
         case 1:
           if ( msg.length() == 0x0e ) {
             msg.length(0x0f);
@@ -603,11 +603,11 @@ class RGBLEDChannel : public Channel<HalType, DimmerList1, DimmerList3, EmptyLis
     }
 
     bool process (const ActionSetMsg& msg) {
-      DPRINT("process() "); DDECLN(number());
+      DPRINT("process() "); DDECLN(this->number());
       DPRINT("msg.value = "); DDECLN(msg.value());
       DPRINT("msg.ramp = "); DDECLN(msg.ramp());
       DPRINT("msg.delay= "); DDECLN(msg.delay());
-      switch (number()) {
+      switch (this->number()) {
         case 1:
           brightness = msg.value();
           setLevel( msg.value(), msg.ramp(), msg.delay() );
