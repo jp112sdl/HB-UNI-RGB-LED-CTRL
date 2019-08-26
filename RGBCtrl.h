@@ -5,7 +5,7 @@
 //- -----------------------------------------------------------------------------------------------------------------------
 
 #ifndef __RGBLEDXX_H__
-#define __DRGBLEDXX_H__
+#define __RGBLEDXX_H__
 
 #include <MultiChannelDevice.h>
 #include <Register.h>
