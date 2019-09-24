@@ -719,7 +719,16 @@ class RGBLEDDevice : public MultiChannelDevice<HalType, ChannelType, ChannelCoun
         leds[i] = CRGB::Black;
       }
       FastLED.show();
+
+#ifdef WSNUM_LEDS
       FastLED.addLeds<WSLED_TYPE, WSLED_PIN, WSCOLOR_ORDER>(leds, WSNUM_LEDS);
+#endif
+      
+#ifdef PWM_ENABLED
+      static AnalogPWMController<PWM_RED_PIN,PWM_GREEN_PIN,PWM_BLUE_PIN,PWM_WHITE_PIN,PWM_WHITE_ONLY> controler;
+      FastLED.addLeds(&controler, leds, 1);
+#endif
+      
       DeviceType::channel(2).setColor(0);
     }
 

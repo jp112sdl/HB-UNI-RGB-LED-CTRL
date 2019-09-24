@@ -12,12 +12,21 @@
 #include <AskSinPP.h>
 #include <LowPower.h>
 #include <Register.h>
-
+#include "analog.h"
 
 #define WSNUM_LEDS    5          //Anzahl angeschlossener LEDs
 #define WSLED_PIN     9          //GPIO Pin LED Anschluss 
 #define WSLED_TYPE    WS2812B    //LED Typ
-#define WSCOLOR_ORDER GRB        //Farbreihenfolge 
+#define WSCOLOR_ORDER GRB        //Farbreihenfolge
+
+/*
+#define PWM_ENABLED           
+#define PWM_RED_PIN     3
+#define PWM_GREEN_PIN   5
+#define PWM_BLUE_PIN    6
+#define PWM_WHITE_PIN   9       //Pin für weiße LED, auskommentieren, wenn keine weiße LED vorhanden ist
+#define PWM_WHITE_ONLY  true    //Wenn weiße LED vorhanden ist, soll nur diese angesteuert werden wenn die Farbe weiß ist?
+*/
 
 #define SLOW_PROGRAM_TIMER     30     //ms Wartezeit für den Übergang
 #define NORMAL_PROGRAM_TIMER   15     //ms Wartezeit für den Übergang
@@ -85,7 +94,10 @@ void loop() {
   bool worked = hal.runready();
   bool poll = sdev.pollRadio();
   if ( worked == false && poll == false ) {
+#ifndef PWM_ENABLED
     hal.activity.savePower<Idle<true>>(hal);
+#endif
   }
+  
   sdev.handleLED();
 }
