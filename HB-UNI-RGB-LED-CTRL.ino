@@ -14,6 +14,8 @@
 #include <Register.h>
 #include "analog.h"
 
+#define ENABLE_RGBW
+
 #define WSNUM_LEDS    5          //Anzahl angeschlossener LEDs
 #define WSLED_PIN     9          //GPIO Pin LED Anschluss 
 #define WSLED_TYPE    WS2812B    //LED Typ
@@ -41,6 +43,9 @@
 #endif
 #define ONBOARD_LED_PIN   4
 
+#ifdef ENABLE_RGBW
+#include "FastLED_RGBW.h"
+#endif
 #include "RGBCtrl.h"
 
 #define PEERS_PER_CHANNEL 4
