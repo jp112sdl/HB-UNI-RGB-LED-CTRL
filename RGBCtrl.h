@@ -28,7 +28,12 @@
 #define LOGIC_INVERSMINUS 15
 #define LOGIC_INVERSMUL 16
 
+#ifdef ENABLE_RGBW
+CRGBW leds[WSNUM_LEDS];
+CRGB *ledsRGB = (CRGB *) &leds[0];
+#else
 CRGB leds[WSNUM_LEDS];
+#endif
 
 #include "RGBPrograms.h"
 
@@ -720,15 +725,17 @@ class RGBLEDDevice : public MultiChannelDevice<HalType, ChannelType, ChannelCoun
       }
       FastLED.show();
 
-#ifdef WSNUM_LEDS
+#ifdef PWM_ENABLED
+      static AnalogPWMController<PWM_RED_PIN, PWM_GREEN_PIN, PWM_BLUE_PIN, PWM_WHITE_PIN, PWM_WHITE_ONLY> controler;
+      FastLED.addLeds(&controler, leds, 1);
+#else
+#ifdef ENABLE_RGBW
+      FastLED.addLeds<WSLED_TYPE, WSLED_PIN, RGB>(ledsRGB, getRGBWsize(WSNUM_LEDS));
+#else
       FastLED.addLeds<WSLED_TYPE, WSLED_PIN, WSCOLOR_ORDER>(leds, WSNUM_LEDS);
 #endif
-      
-#ifdef PWM_ENABLED
-      static AnalogPWMController<PWM_RED_PIN,PWM_GREEN_PIN,PWM_BLUE_PIN,PWM_WHITE_PIN,PWM_WHITE_ONLY> controler;
-      FastLED.addLeds(&controler, leds, 1);
 #endif
-      
+
       DeviceType::channel(2).setColor(0);
     }
 
