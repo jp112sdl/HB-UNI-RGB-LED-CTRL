@@ -14,7 +14,7 @@
 #include <Register.h>
 #include "analog.h"
 
-#define ENABLE_RGBW
+//#define ENABLE_RGBW            // for SK6812 LEDs
 
 #define WSNUM_LEDS    5          //Anzahl angeschlossener LEDs
 #define WSLED_PIN     9          //GPIO Pin LED Anschluss 
