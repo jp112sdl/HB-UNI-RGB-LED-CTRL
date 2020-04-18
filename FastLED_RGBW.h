@@ -35,19 +35,25 @@ struct CRGBW  {
 
   CRGBW(){}
 
-  CRGBW(uint8_t rd, uint8_t grn, uint8_t blu, uint8_t wht){
-    r = rd;
-    g = grn;
-    b = blu;
-    w = wht;
-  }
 
-  inline void operator = (const CRGB c) __attribute__((always_inline)){ 
-    this->r = c.r;
-    this->g = c.g;
-    this->b = c.b;
-    this->white = 0;
-  }
+CRGBW(uint8_t rd, uint8_t grn, uint8_t blu){ 
+w = min(rd, grn);
+w = min(w, blu); 
+
+r = rd - w;
+g = grn - w;
+b = blu - w;
+}
+
+inline void operator = (const CRGB c) __attribute__((always_inline)){ 
+uint8_t w = min(c.r, c.g);
+w = min(w, c.b); 
+this->r = c.r - w;
+this->g = c.g - w;
+this->b = c.b - w;
+this->w = w;
+}
+
 };
 
 inline uint16_t getRGBWsize(uint16_t nleds){
