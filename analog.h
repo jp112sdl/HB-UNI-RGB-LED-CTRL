@@ -1,4 +1,4 @@
-﻿#include "FastLED.h"
+#include "FastLED.h"
 
 ///@ingroup chipsets
 ///@{
